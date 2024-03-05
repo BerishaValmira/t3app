@@ -33,6 +33,10 @@ export const columns: ColumnDef<Entity2>[] = [
     accessorKey: "interviewId",
     header: "InterviewId",
   },
+  {
+    accessorKey:'note',
+    header:"Note"
+  }
 ];
 
 export default function Entity2Table() {

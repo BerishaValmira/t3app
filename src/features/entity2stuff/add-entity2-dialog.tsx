@@ -65,6 +65,7 @@ export default function AddEntity1Dialog() {
     defaultValues: {
       isPassed: false,
       interviewId: 0,
+      note:""
     },
   });
 
@@ -95,6 +96,21 @@ export default function AddEntity1Dialog() {
                       checked={field.value ? field.value : undefined}
                       onCheckedChange={field.onChange}
                     />
+                  </FormControl>
+                  <FormLabel className="text-sm font-normal">
+                    Is Passed
+                  </FormLabel>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='note'
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                  <FormControl>
+                   <Input {...field}/>
                   </FormControl>
                   <FormLabel className="text-sm font-normal">
                     Is Passed
