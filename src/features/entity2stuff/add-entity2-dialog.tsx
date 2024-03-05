@@ -63,9 +63,9 @@ export default function AddEntity1Dialog() {
   const form = useForm<z.infer<typeof insertEntity2Schema>>({
     resolver: zodResolver(insertEntity2Schema),
     defaultValues: {
-      isPassed: false,
-      interviewId: 0,
-      note:""
+      // isPassed: false,
+      entity1Id: 0,
+      // note:""
     },
   });
 
@@ -86,7 +86,7 @@ export default function AddEntity1Dialog() {
             <DialogDescription>Fill the data to create</DialogDescription>
           </DialogHeader>
           <div className="flex flex-col gap-4 space-x-2">
-            <FormField
+            {/* <FormField
               control={form.control}
               name="isPassed"
               render={({ field }) => (
@@ -150,7 +150,7 @@ export default function AddEntity1Dialog() {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
           </div>
           <Button onClick={form.handleSubmit(onSubmit)}>Submit</Button>
         </DialogContent>

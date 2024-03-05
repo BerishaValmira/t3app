@@ -25,18 +25,18 @@ export const columns: ColumnDef<Entity2>[] = [
     accessorKey: "id",
     header: "Id",
   },
+  // {
+  //   accessorKey: "isPassed",
+  //   header: "Is Passed",
+  // },
   {
-    accessorKey: "isPassed",
-    header: "Is Passed",
+    accessorKey: 'entity1Id',
+    header: "entity1Id",
   },
-  {
-    accessorKey: "interviewId",
-    header: "InterviewId",
-  },
-  {
-    accessorKey:'note',
-    header:"Note"
-  }
+  // {
+  //   accessorKey:'note',
+  //   header:"Note"
+  // }
 ];
 
 export default function Entity2Table() {
@@ -44,12 +44,12 @@ export default function Entity2Table() {
 
   const { data: interviewOptions } = api.base.getEntity1.useQuery();
 
-  const {
-    mutate,
-    data: filteredData,
-    isSuccess,
-    reset,
-  } = api.base.filterEntity2.useMutation();
+  // const {
+  //   mutate,
+  //   data: filteredData,
+  //   isSuccess,
+  //   reset,
+  // } = api.base.filterEntity2.useMutation();
 
   return (
     <div className="flex flex-col ">
@@ -57,7 +57,7 @@ export default function Entity2Table() {
         <AddEntity2Dialog />
         <Select
           onValueChange={(value) => {
-            mutate({ interviewId: Number(value) });
+            // mutate({ interviewId: Number(value) });
           }}
           defaultValue={"0"}
         >
@@ -69,7 +69,6 @@ export default function Entity2Table() {
           </SelectTrigger>
           <SelectContent>
             {interviewOptions
-              ?.filter((x) => !x.isDeleted)
               .map((x) => (
                 <SelectItem value={`${x.id}`}>
                   {`Interview nr. ${x.id}`}
@@ -77,14 +76,15 @@ export default function Entity2Table() {
               ))}
           </SelectContent>
         </Select>
-        <Button disabled={!isSuccess} onClick={() => reset()}>
+        {/* <Button disabled={!isSuccess} onClick={() => reset()}>
           Remove filter
-        </Button>
+        </Button> */}
       </div>
       <div className="container mx-auto py-10">
         {isLoading && "Loading..."}
         {data && (
-          <DataTable columns={columns} data={isSuccess ? filteredData : data} />
+          // <DataTable columns={columns} data={isSuccess ? filteredData : data} />
+          <DataTable columns={columns} data={data} />
         )}
       </div>
     </div>

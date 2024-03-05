@@ -33,16 +33,16 @@ export default function Entity1Table() {
     refetchOnWindowFocus: false,
   });
 
-  const { mutate: remove } = api.base.deleteEntity1.useMutation({
-    onSuccess: () => refetch(),
-  });
+  // const { mutate: remove } = api.base.deleteEntity1.useMutation({
+  //   onSuccess: () => refetch(),
+  // });
 
-  const {
-    mutate,
-    data: filteredData,
-    isSuccess,
-    reset,
-  } = api.base.filterEntity1.useMutation({});
+  // const {
+  //   mutate,
+  //   data: filteredData,
+  //   isSuccess,
+  //   reset,
+  // } = api.base.filterEntity1.useMutation({});
 
   const columns: ColumnDef<Entity1>[] = useMemo(() => {
     return [
@@ -50,19 +50,19 @@ export default function Entity1Table() {
         accessorKey: "id",
         header: "Id",
       },
-      {
-        accessorKey: "isDeleted",
-        header: "Is Deleted",
-      },
-      {
-        accessorKey: "startDate",
-        header: "Start Date",
-        cell: ({ row }) => {
-          const val = row.original.startDate?.toString();
-          console.log(val);
-          return <div>{val}</div>;
-        },
-      },
+      // {
+      //   accessorKey: "isDeleted",
+      //   header: "Is Deleted",
+      // },
+      // {
+      //   accessorKey: "startDate",
+      //   header: "Start Date",
+      //   cell: ({ row }) => {
+      //     const val = row.original.startDate?.toString();
+      //     console.log(val);
+      //     return <div>{val}</div>;
+      //   },
+      // },
       {
         id: "actions",
         cell: ({ row }) => {
@@ -78,7 +78,7 @@ export default function Entity1Table() {
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                 <DropdownMenuItem
                   onClick={() => {
-                    remove(row.original.id);
+                    // remove(row.original.id);
                   }}
                 >
                   Delete
@@ -114,23 +114,27 @@ export default function Entity1Table() {
               selected={date}
               onSelect={(date) => {
                 date && setDate(date);
-                date && mutate({ date: date.toISOString() });
+                // date && mutate({ date: date.toISOString() });
               }}
               initialFocus
             />
           </PopoverContent>
         </Popover>
-        <Button disabled={!isSuccess} onClick={() => reset()}>
+        {/* <Button disabled={!isSuccess} onClick={() => reset()}>
           Remove filter
-        </Button>
+        </Button> */}
       </div>
       <div className="container mx-auto py-10">
         {isLoading && "Loading..."}
         {data && (
           <DataTable
-            columns={columns}
-            data={isSuccess ? filteredData : data.filter((x) => !x.isDeleted)}
-          />
+          columns={columns}
+          data={data}
+        />
+          // <DataTable
+          //   columns={columns}
+          //   data={isSuccess ? filteredData : data}
+          // />
         )}
       </div>
     </div>

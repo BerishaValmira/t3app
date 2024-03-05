@@ -51,8 +51,6 @@ export default function AddEntity1Dialog() {
   const form = useForm<z.infer<typeof insertEntity1Schema>>({
     resolver: zodResolver(insertEntity1Schema),
     defaultValues: {
-      startDate: new Date(Date.now()).toString(),
-      isDeleted: false,
     },
   });
 
@@ -73,7 +71,7 @@ export default function AddEntity1Dialog() {
             <DialogDescription>Fill the data to create</DialogDescription>
           </DialogHeader>
           <div className="flex flex-col gap-4 space-x-2">
-            <FormField
+            {/* <FormField
               control={form.control}
               name="isDeleted"
               render={({ field }) => (
@@ -136,7 +134,7 @@ export default function AddEntity1Dialog() {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
           </div>
           <Button onClick={form.handleSubmit(onSubmit)}>Submit</Button>
         </DialogContent>

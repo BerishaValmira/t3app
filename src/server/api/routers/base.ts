@@ -27,22 +27,23 @@ export const baseRouter = createTRPCRouter({
   getEntity1: publicProcedure.query(async ({ ctx ,input}) => {
     return  await ctx.db.select().from(entity1);
   }),
-  filterEntity1:publicProcedure.input(z.object({date:z.string()})).mutation(async ({ctx,input})=>{
-    return await ctx.db.select().from(entity1).where(eq(entity1.startDate,input.date))
-  }),
-  filterEntity2:publicProcedure.input(z.object({interviewId:z.number()})).mutation(async ({ctx,input})=>{
-    return await ctx.db.select().from(entity2).where(eq(entity2.interviewId,input.interviewId))
-  }),
+  // filterEntity1:publicProcedure.input(z.object({date:z.string()})).mutation(async ({ctx,input})=>{
+  //   return await ctx.db.select().from(entity1).where(eq(entity1.startDate,input.date))
+  // }),
+  // filterEntity2:publicProcedure.input(z.object({interviewId:z.number()})).mutation(async ({ctx,input})=>{
+  //   return await ctx.db.select().from(entity2).where(eq(entity2.interviewId,input.interviewId))
+  // }),
   getEntity2: publicProcedure.query(async ({ ctx }) => {
     return await ctx.db.select().from(entity2)
   }),
   addEntity1: publicProcedure.input(insertEntity1Schema).mutation(async ({ctx,input})=>{
-    return await ctx.db.insert(entity1).values(input)
+    return await ctx.db.insert(entity1).values({})
   }),
   addEntity2: publicProcedure.input(insertEntity2Schema).mutation(async ({ctx,input})=>{
-    return await ctx.db.insert(entity2).values(input)
+    return await ctx.db.insert(entity2).values({})
+    // .values(input)
   }),
-  deleteEntity1:publicProcedure.input(z.number()).mutation(async ({ctx,input})=>{
-    return await ctx.db.update(entity1).set({isDeleted:true}).where(eq(entity1.id,input))
-  }),
+  // deleteEntity1:publicProcedure.input(z.number()).mutation(async ({ctx,input})=>{
+  //   return await ctx.db.update(entity1).set({isDeleted:true}).where(eq(entity1.id,input))
+  // }),
 });
