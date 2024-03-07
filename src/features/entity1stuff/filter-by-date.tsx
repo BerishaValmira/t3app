@@ -9,12 +9,11 @@ import {
   PopoverTrigger,
 } from "~/components/ui/popover";
 import { cn } from "~/lib/utils";
-import { api } from "~/trpc/react";
 
 export default function FilterByDate() {
   const [date, setDate] = useState<Date>(new Date(Date.now()));
 
-  const { mutate, data } = api.base.filterEntity1.useMutation();
+  // const { mutate, data } = api.base.filterEntity1.useMutation();
 
   return (
     <Popover>
