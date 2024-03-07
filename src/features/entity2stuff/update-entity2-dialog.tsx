@@ -14,7 +14,7 @@ import {
 } from "~/components/ui/dialog";
 import { insertEntity1Schema, insertEntity2Schema } from "~/server/db/schema";
 import { api } from "~/trpc/react";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { format } from "date-fns";
 import {
   Form,
@@ -44,16 +44,22 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 
-export default function AddEntity1Dialog() {
-  const [open, setOpen] = useState(false);
-
+export default function UpdateEntity2Dialog({
+  open,
+  setOpen,
+  selectedId,
+}: {
+  selectedId: number;
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+}) {
   const { refetch } = api.base.getEntity2.useQuery();
 
   const { data: interviewOptions } = api.base.getEntity1.useQuery(undefined, {
     refetchOnWindowFocus: false,
   });
 
-  const { mutate, data, isLoading } = api.base.addEntity2.useMutation({
+  const { mutate, data, isLoading } = api.base.updateEntity2.useMutation({
     onSuccess: async () => {
       setOpen(false);
       await refetch();
@@ -64,7 +70,6 @@ export default function AddEntity1Dialog() {
     resolver: zodResolver(insertEntity2Schema),
     defaultValues: {
       // isPassed: false,
-      entity1Id: 0,
       type: "",
       name: "",
       number: "0",
@@ -74,14 +79,14 @@ export default function AddEntity1Dialog() {
 
   function onSubmit(values: z.infer<typeof insertEntity2Schema>) {
     console.log(values);
-    mutate(values);
+    mutate({ ...values, id: selectedId });
   }
 
   return (
     <Form {...form}>
       <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
         <DialogTrigger>
-          <Button>Create Entity2</Button>
+          <Button>Update Entity2</Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
@@ -129,36 +134,6 @@ export default function AddEntity1Dialog() {
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="entity1Id"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>Person</FormLabel>
-                  <Select
-                    onValueChange={(value) => {
-                      field.onChange(value);
-                      form.setValue("entity1Id", Number(value));
-                    }}
-                    defaultValue={"0"}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a person" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {interviewOptions.map((x) => (
-                        <SelectItem value={`${x.id}`}>
-                          {`person name ${x.name}`}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
                   <FormMessage />
                 </FormItem>
               )}

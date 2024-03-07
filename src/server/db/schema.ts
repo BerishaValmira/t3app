@@ -39,12 +39,17 @@ export const createTable = pgTableCreator((name) => `t3app_${name}`);
 
 export const entity1 = createTable("entity1",{
   id: serial("id").primaryKey(),
- 
+  name: varchar("name", { length: 256 }),
+  surname: varchar("surname", { length: 256 }),
+  birthyear: varchar("birthyear"),
 })
 
 export const entity2 = createTable("entity2",{
   id: serial("id").primaryKey(),
-  entity1Id: integer("interview_id").references(() => entity1.id)
+  entity1Id: integer("interview_id").references(() => entity1.id),
+  name: varchar("name", { length: 256 }),
+  number: varchar("number", { length: 256 }),
+  type: varchar("type", { length: 256 }),
 })
 
 export type Entity1 = typeof entity1.$inferSelect

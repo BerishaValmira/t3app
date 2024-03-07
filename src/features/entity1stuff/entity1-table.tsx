@@ -47,8 +47,8 @@ export default function Entity1Table() {
   const columns: ColumnDef<Entity1>[] = useMemo(() => {
     return [
       {
-        accessorKey: "id",
-        header: "Id",
+        accessorKey: "name",
+        header: "Name",
       },
       // {
       //   accessorKey: "isDeleted",
@@ -95,7 +95,7 @@ export default function Entity1Table() {
     <div className="flex flex-col ">
       <div className="flex justify-center gap-4">
         <AddEntity1Dialog />
-        <Popover>
+        {/* <Popover>
           <PopoverTrigger asChild>
             <Button
               variant={"outline"}
@@ -119,7 +119,7 @@ export default function Entity1Table() {
               initialFocus
             />
           </PopoverContent>
-        </Popover>
+        </Popover> */}
         {/* <Button disabled={!isSuccess} onClick={() => reset()}>
           Remove filter
         </Button> */}
@@ -127,10 +127,7 @@ export default function Entity1Table() {
       <div className="container mx-auto py-10">
         {isLoading && "Loading..."}
         {data && (
-          <DataTable
-          columns={columns}
-          data={data}
-        />
+          <DataTable columns={columns} data={data} />
           // <DataTable
           //   columns={columns}
           //   data={isSuccess ? filteredData : data}

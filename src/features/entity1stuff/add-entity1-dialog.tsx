@@ -42,15 +42,18 @@ export default function AddEntity1Dialog() {
   const { refetch } = api.base.getEntity1.useQuery();
 
   const { mutate, data, isLoading } = api.base.addEntity1.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
       setOpen(false);
-      refetch();
+      await refetch();
     },
   });
 
   const form = useForm<z.infer<typeof insertEntity1Schema>>({
     resolver: zodResolver(insertEntity1Schema),
     defaultValues: {
+      name: "",
+      birthyear: new Date(Date.now()).toString(),
+      surname: "",
     },
   });
 
@@ -71,27 +74,43 @@ export default function AddEntity1Dialog() {
             <DialogDescription>Fill the data to create</DialogDescription>
           </DialogHeader>
           <div className="flex flex-col gap-4 space-x-2">
-            {/* <FormField
+            <FormField
               control={form.control}
-              name="isDeleted"
+              name="name"
               render={({ field }) => (
                 <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                  <FormLabel className="text-sm font-normal">name</FormLabel>
                   <FormControl>
-                    <Checkbox
+                    <Input {...field} />
+                    {/* <Checkbox
                       checked={field.value ? field.value : undefined}
                       onCheckedChange={field.onChange}
-                    />
+                    /> */}
                   </FormControl>
-                  <FormLabel className="text-sm font-normal">
-                    Is deleted
-                  </FormLabel>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <FormField
               control={form.control}
-              name="startDate"
+              name="surname"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                  <FormLabel className="text-sm font-normal">surname</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                    {/* <Checkbox
+                      checked={field.value ? field.value : undefined}
+                      onCheckedChange={field.onChange}
+                    /> */}
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="birthyear"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
                   <FormLabel>Start Date</FormLabel>
@@ -101,12 +120,12 @@ export default function AddEntity1Dialog() {
                       variant={"outline"}
                       className={cn(
                         "w-[240px] pl-3 text-left font-normal",
-                        !form.getValues("startDate") && "text-muted-foreground",
+                        !form.getValues("birthyear") && "text-muted-foreground",
                       )}
                       disabled
                     >
-                      {form.watch("startDate") ? (
-                        format(form.watch("startDate") as string, "PPP")
+                      {form.watch("birthyear") ? (
+                        format(form.watch("birthyear") as string, "PPP")
                       ) : (
                         <span>Pick a date</span>
                       )}
@@ -117,13 +136,13 @@ export default function AddEntity1Dialog() {
                   <Calendar
                     mode="single"
                     selected={
-                      form.getValues("startDate")
-                        ? new Date(form.watch("startDate") as string)
+                      form.getValues("birthyear")
+                        ? new Date(form.watch("birthyear") as string)
                         : undefined
                     }
                     onSelect={(date) => {
                       console.log(date?.toString());
-                      form.setValue("startDate", date?.toString());
+                      form.setValue("birthyear", date?.toString());
                     }}
                     // disabled={(date) =>
                     //   date > new Date() || date < new Date("1900-01-01")
@@ -134,7 +153,7 @@ export default function AddEntity1Dialog() {
                   <FormMessage />
                 </FormItem>
               )}
-            /> */}
+            />
           </div>
           <Button onClick={form.handleSubmit(onSubmit)}>Submit</Button>
         </DialogContent>
