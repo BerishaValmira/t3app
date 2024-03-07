@@ -54,9 +54,9 @@ export default function AddEntity1Dialog() {
   });
 
   const { mutate, data, isLoading } = api.base.addEntity2.useMutation({
-    onSuccess: () => {
+    onSuccess:async () => {
       setOpen(false);
-      refetch();
+      await refetch();
     },
   });
 

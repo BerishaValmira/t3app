@@ -35,7 +35,7 @@ export const createTable = pgTableCreator((name) => `t3app_${name}`);
 //   (example) => ({
 //     nameIndex: index("name_idx").on(example.name),
 //   })
-// );
+// )
 
 export const entity1 = createTable("entity1",{
   id: serial("id").primaryKey(),
